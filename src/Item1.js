@@ -156,7 +156,7 @@ var Item = React.createClass({
               : null
             }
             <div style={styles.ctas}>
-              <Button text={props.ctaText} color={color} size="standard" />
+              <Button text={props.ctaText} color={color} size="standard" display="inline" />
             </div>
           </div>
         </LinkRadium>

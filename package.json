@@ -1,6 +1,6 @@
 {
   "name": "floflo-react-items",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Some pre designed items to use on your react app",
   "main": "./dst/index.js",
   "scripts": {
