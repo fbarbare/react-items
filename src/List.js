@@ -39,8 +39,8 @@ var List = React.createClass({
     var props = this.props,
         itemProps = props.itemProps || {};
 
-    if (itemProps.toObject) {
-      itemProps = itemProps.toObject();
+    if (itemProps.toJS) {
+      itemProps = itemProps.toJS();
     }
 
     return (
@@ -48,7 +48,7 @@ var List = React.createClass({
         <StyleRoot>
           <ul style={styles.list}>
             {props.items.map(function (item, index) {
-              var itemData = item.toObject();
+              var itemData = item.toJS ? item.toJS() : item
 
               return (
                 <li key={'list-item-' + index} style={styles.item}>

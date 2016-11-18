@@ -4,8 +4,6 @@ var Radium = require('radium');
 var Icons = require('react-icons/lib/fa');
 var PureMixin = require('react-pure-render/mixin');
 var Button = require('floflo-react-inputs').Button;
-var Link = require('react-router').Link;
-var LinkRadium = Radium(Link);
 
 var styles = {
   item: {
@@ -15,13 +13,10 @@ var styles = {
     font: 'inherit'
   },
 
-  link: {
+  container: {
     display: 'block',
     overflow: 'hidden',
-    borderRadius: '2px',
-    textDecoration: 'none',
-    cursor: 'pointer',
-    transition: '.1s 0s ease-in-out'
+    borderRadius: '2px'
   },
 
   header: {
@@ -51,7 +46,6 @@ var styles = {
     borderRadius: '50%',
     borderWidth: '2px',
     borderStyle: 'solid',
-    backgroundColor: 'inherit',
     textAlign: 'center',
     padding: '3px',
     borderColor: 'inherit',
@@ -82,6 +76,7 @@ var styles = {
   description: {
     display: 'block',
     display: '-webkit-box',
+    // display: ['-webkit-box', 'block'],
 
     /* Fallback for non-webkit: fontSize * lineHeight * linesToShow */
     height: '54px',
@@ -99,6 +94,9 @@ var styles = {
     paddingTop: '10px',
     fontSize: '14px',
     textAlign: 'right'
+  },
+  cta: {
+    padding: '0 5px'
   }
 };
 
@@ -116,28 +114,35 @@ var Item = React.createClass({
   getBackgroundColor: function () {
     return this.props.backgroundColor || '#fff';
   },
-  getBackgroundColorLight: function () {
-    var color = Color(this.getBackgroundColor());
-
-    return color.lighten(0.15).rgbString();
-  },
   getBoxShadow: function () {
-    return this.props.boxShadow ? '0 1px 8px rgba(0,0,0,0.3)' : 'initial';
+    return this.props.boxShadow ? '0 1px 8px rgba(0, 0, 0, 0.3)' : 'initial';
+  },
+
+  getCtas: function () {
+    var ctas = this.props.ctas || [];
+
+    if (this.props.ctaText) {
+      ctas.push({
+        text: this.props.ctaText,
+        href: this.props.url
+      });
+    }
+
+    return ctas
   },
 
   render: function () {
     var props = this.props,
+        ctas = this.getCtas(),
         color = this.getColor(),
         colorLight = this.getColorLight(),
         backgroundColor = this.getBackgroundColor(),
-        backgroundColorLight = this.getBackgroundColorLight(),
         boxShadow = this.getBoxShadow(),
-        Icon = Icons[props.logo],
-        url = props.url;
+        Icon = Icons[props.logo];
 
     return (
       <div style={styles.item}>
-        <LinkRadium style={[styles.link, {boxShadow}, {backgroundColor: backgroundColor, ':hover': {backgroundColor: backgroundColorLight}}]} to={url} title={props.name}>
+        <div style={[styles.container, {boxShadow, backgroundColor}]}>
           <div style={[styles.header, {backgroundImage: 'url(' + props.picture + ')'}]}></div>
           {Icon
             ? <div style={[styles.border, {borderColor: colorLight}]}>
@@ -156,10 +161,20 @@ var Item = React.createClass({
               : null
             }
             <div style={styles.ctas}>
-              <Button text={props.ctaText} color={color} size="standard" display="inline" />
+              {ctas.map((cta, index) => {
+                cta.color = cta.color || color;
+                cta.size = cta.size || "standard";
+                cta.display = cta.display || "inline";
+
+                return (
+                  <span key={'item1-cta-' + index} style={styles.cta}>
+                    <Button {...cta} />
+                  </span>
+                );
+              })}
             </div>
           </div>
-        </LinkRadium>
+        </div>
       </div>
     )
   }
