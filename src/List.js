@@ -8,27 +8,6 @@ var styles = {
     margin: 0,
     border: 0,
     padding: 0
-  },
-
-  item: {
-    display: 'inline-block',
-    width: '100%',
-
-    '@media (min-width: 500px)': {
-      width: '100%'
-    },
-
-    '@media (min-width: 800px)': {
-      width: '50%'
-    },
-
-    '@media (min-width: 1200px)': {
-      width: '33.33%'
-    },
-
-    '@media (min-width: 1600px)': {
-      width: '25%'
-    }
   }
 };
 
@@ -51,9 +30,7 @@ var List = React.createClass({
               var itemData = item.toJS ? item.toJS() : item
 
               return (
-                <li key={'list-item-' + index} style={styles.item}>
-                  <props.component {...itemProps} {...itemData} />
-                </li>
+                <props.component key={'list-item-' + index} {...itemProps} {...itemData} />
               );
             })}
           </ul>

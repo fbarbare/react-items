@@ -7,10 +7,24 @@ var Button = require('floflo-react-inputs').Button;
 
 var styles = {
   item: {
+    display: 'inline-block',
     boxSizing: 'border-box',
     padding: '5px',
     width: '100%',
-    font: 'inherit'
+    font: 'inherit',
+
+    '@media (min-width: 500px)': {
+      width: '50%'
+    },
+    '@media (min-width: 1000px)': {
+      width: '33.33%'
+    },
+    '@media (min-width: 1500px)': {
+      width: '25%'
+    },
+    '@media (min-width: 2000px)': {
+      width: '20%'
+    }
   },
 
   container: {
@@ -141,7 +155,7 @@ var Item = React.createClass({
         Icon = Icons[props.logo];
 
     return (
-      <div style={styles.item}>
+      <li style={styles.item}>
         <div style={[styles.container, {boxShadow, backgroundColor}]}>
           <div style={[styles.header, {backgroundImage: 'url(' + props.picture + ')'}]}></div>
           {Icon
@@ -175,7 +189,7 @@ var Item = React.createClass({
             </div>
           </div>
         </div>
-      </div>
+      </li>
     )
   }
 });
